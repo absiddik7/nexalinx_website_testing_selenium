@@ -1,0 +1,6 @@
+CHROME_DRIVER_PATH = "D:\QA\Website_Nexalinx_Testing\drivers"
+BASE_URL = "https://www.nexalinx.com/"
+HOME_PAGE_URL = "https://www.nexalinx.com/#/home"
+PORTFOLIO_PAGE_URL = "https://www.nexalinx.com/#/portfolio"
+BLOG_PAGE_URL = "https://www.nexalinx.com/#/blog"
+CONTACT_PAGE_URL = "https://www.nexalinx.com/#/contact"
