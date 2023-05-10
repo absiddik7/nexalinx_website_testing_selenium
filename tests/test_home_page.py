@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import utils.config as config
+from selenium.webdriver.common.action_chains import ActionChains
 
 class NexalinxHomePageTest(unittest.TestCase):
 
@@ -100,11 +101,85 @@ class NexalinxHomePageTest(unittest.TestCase):
         self.assertTrue(nav_dropdown.is_displayed())
         sleep(3)
 
-
-
         self.driver.quit()
 
+    def test_schedule_meeting(self):
+        driver = self.driver
+        driver.get(config.BASE_URL)
+        sleep(5)
 
+        # Javascript expression to scroll to a particular element
+        js_code = "arguments[0].scrollIntoView();"
+
+        # The WebElement you want to scroll to
+        schedule_meeting_form = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/section[4]/div[1]/div[1]/div[2]/form[1]")
+        schedule_meeting_h1 = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/section[4]/div[1]/div[1]/div[2]/form[1]/div[1]/h3[1]")
+
+        # verify that schedule meeting is displayed
+        driver.execute_script(js_code, schedule_meeting_form, schedule_meeting_h1)
+        sleep(5)
+        self.assertTrue(schedule_meeting_h1.is_displayed(), "Schedule Meeting is not displayed")
+        self.assertTrue(schedule_meeting_form.is_displayed(), "Schedule Meeting form is not displayed")
+
+        sleep(5)
+        self.driver.quit()
+
+    def test_about_us(self):
+        driver = self.driver
+        driver.get(config.BASE_URL)
+        sleep(5)
+
+        # Javascript expression to scroll to a particular element
+        js_code = "arguments[0].scrollIntoView();"
+
+        about_us_section = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/section[6]/div[1]/div[1]/div[1]")
+        read_more_button = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/section[6]/div[1]/div[1]/div[1]/div[1]/a[1]/button[1]")
+        # verify that schedule meeting is displayed
+        driver.execute_script(js_code, about_us_section, read_more_button)
+        sleep(8)
+        self.assertTrue(about_us_section.is_displayed(), "About Us is not displayed")
+        self.assertTrue(read_more_button.is_displayed(), "Read More button is not displayed")
+
+        # verify clicking on read more button opens correct page
+        read_more_button.click()
+        self.assertEqual(self.driver.current_url, config.ABOUT_US_PAGE_URL)
+
+        sleep(5)
+        self.driver.quit()
+
+    
+    def test_technology_partner(self):
+        driver = self.driver
+        driver.get(config.BASE_URL)
+        sleep(5)
+
+        # Javascript expression to scroll to a particular element
+        js_code = "arguments[0].scrollIntoView();"
+
+        technology_partner_section = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/section[7]")
+
+        # verify that technology partner section is displayed
+        driver.execute_script(js_code, technology_partner_section)
+        sleep(5)
+        self.assertTrue(technology_partner_section.is_displayed(), "Technology Partner section is not displayed")
+        
+
+
+    def test_our_recent_works(self):
+        driver = self.driver
+        driver.get(config.BASE_URL)
+        sleep(5)
+
+
+
+    def test_footer(self):
+        driver = self.driver
+        driver.get(config.BASE_URL)
+        sleep(5)
+
+
+
+    
     
     def tearDown(self):
         self.driver.close
