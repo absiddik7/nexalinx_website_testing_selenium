@@ -3,18 +3,19 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import utils.config as config
-from selenium.webdriver.common.action_chains import ActionChains
 
-class NexalinxHomePageTest(unittest.TestCase):
+class HomePageTest(unittest.TestCase):
+
 
     def setUp(self): 
         self.driver = webdriver.Chrome(config.CHROME_DRIVER_PATH)
         self.driver.maximize_window()
         self.driver.implicitly_wait(10)
+        self.scroll_to_element = "arguments[0].scrollIntoView();"
 
+    
+    
     def test_homepage(self):
         #driver = self.driver
         self.driver.get(config.BASE_URL)
@@ -43,15 +44,15 @@ class NexalinxHomePageTest(unittest.TestCase):
 
         # verify carousel slide shows
         self.driver.find_element(By.LINK_TEXT, "Home").click()
-        carousel = self.driver.find_element(By.XPATH, "//div[contains(@class,'carousel slide')]")
-        self.assertTrue(carousel.is_displayed())
+        slider = self.driver.find_element(By.XPATH, "//div[contains(@class,'carousel slide')]")
+        self.assertTrue(slider.is_displayed())
 
         # verify carousel slide automatically slides
-        carousel = self.driver.find_element(By.XPATH, "//div[contains(@class,'carousel slide')]")
+        slider = self.driver.find_element(By.XPATH, "//div[contains(@class,'carousel slide')]")
         # Wait for the carousel slide to change
         old_slide_text = self.driver.find_element(By.XPATH, "//div[@class='active carousel-item']//h1").text
         # Wait for the active slide to change after the time interval
-        sleep(5)
+        sleep(8)
         new_slide_text = self.driver.find_element(By.XPATH, "//div[@class='active carousel-item']//h1").text
         self.assertNotEqual(old_slide_text, new_slide_text)
 
@@ -101,6 +102,21 @@ class NexalinxHomePageTest(unittest.TestCase):
         self.assertTrue(nav_dropdown.is_displayed())
         sleep(3)
 
+        # verfiy clicking on the nav item About US open correct page
+        about_us_dropdown_item = self.driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/nav[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/a[1]/a[1]")
+        about_us_dropdown_item.click()
+        self.assertEqual(self.driver.current_url, config.ABOUT_US_PAGE_URL)
+        sleep(3)
+
+        # verfiy clicking on the nav item Our Team open correct page
+        about_us_nav_item = self.driver.find_element(By.LINK_TEXT, "About US")
+        about_us_nav_item.click()
+        sleep(3)
+        our_team_dropdown_item = self.driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/nav[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/a[1]/a[2]")
+        our_team_dropdown_item.click()
+        self.assertEqual(self.driver.current_url, config.OUR_TEAM_PAGE_URL)
+        sleep(3)
+
         self.driver.quit()
 
     def test_schedule_meeting(self):
@@ -144,7 +160,7 @@ class NexalinxHomePageTest(unittest.TestCase):
         read_more_button.click()
         self.assertEqual(self.driver.current_url, config.ABOUT_US_PAGE_URL)
 
-        sleep(5)
+        sleep(3)
         self.driver.quit()
 
     
@@ -163,6 +179,9 @@ class NexalinxHomePageTest(unittest.TestCase):
         sleep(5)
         self.assertTrue(technology_partner_section.is_displayed(), "Technology Partner section is not displayed")
         
+        # more to test here
+
+        driver.quit()
 
 
     def test_our_recent_works(self):
@@ -170,17 +189,73 @@ class NexalinxHomePageTest(unittest.TestCase):
         driver.get(config.BASE_URL)
         sleep(5)
 
+        # Javascript expression to scroll to a particular element
+        js_code = "arguments[0].scrollIntoView();"
 
+        our_recent_works = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/section[11]/div[1]")
+
+        # verify that our recent works section is displayed
+        driver.execute_script(js_code, our_recent_works)
+        sleep(5)
+
+        self.assertTrue(our_recent_works.is_displayed(), "Our Recent Works section is not displayed")
+
+        # verify owl-carousel owl-theme slider-custom owl-loaded owl-drag sliding automatically
+        slider = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/section[11]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]")
+        self.assertTrue(slider.is_displayed(), "Slider is not displayed")
+        
+        sleep(3)
+
+
+        # more to test here
+
+        driver.quit()
 
     def test_footer(self):
         driver = self.driver
         driver.get(config.BASE_URL)
         sleep(5)
 
+        # Javascript expression to scroll to a particular element
+        scroll_to_element = self.scroll_to_element
+
+        back_to_top_button = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/div[5]/button[1]/button[1]")
+        footer = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]")
+        
+        # verify that footer is displayed
+        driver.execute_script(scroll_to_element, footer)
+        self.assertTrue(footer.is_displayed(), "Footer is not displayed")
+        sleep(3)
+
+        # verify that footer items are displayed
+
+        about_nexalinx_footer = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[1]")
+        services_footer = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[2]/ul[1]")
+        us_address_footer = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[3]/ul[1]")
+        bd_address_footer = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[4]/ul[1]")
+        
+        self.assertTrue(about_nexalinx_footer.is_displayed(), "About Nexalinx footer is not displayed")
+        self.assertTrue(services_footer.is_displayed(), "Services footer is not displayed")
+        self.assertTrue(us_address_footer.is_displayed(), "US Address footer is not displayed")
+        self.assertTrue(bd_address_footer.is_displayed(), "BD Address footer is not displayed")
+        sleep(3)
 
 
-    
-    
+
+        
+        # verify that back to top button is displayed
+        self.assertTrue(back_to_top_button.is_displayed(), "Back to top button is not displayed")
+        # verify clicking on back to top button scrolls to top
+        back_to_top_button.click()
+        sleep(5)
+        slider = self.driver.find_element(By.XPATH, "//div[contains(@class,'carousel slide')]")
+        self.assertTrue(slider.is_displayed())
+
+
+
+
+        sleep(5)
+        
     def tearDown(self):
         self.driver.close
 
