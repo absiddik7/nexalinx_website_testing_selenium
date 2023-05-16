@@ -82,7 +82,7 @@ class HomePageTest(unittest.TestCase):
         nav_dropdown = self.driver.find_element(By.XPATH, "//div[contains(@class,'dropdown-menu show')]")
         self.assertTrue(nav_dropdown.is_displayed())
         sleep(3)
-
+  
         # verfiy clicking on the nav item Portfolio open correct page
         nav_item = self.driver.find_element(By.LINK_TEXT, "Portfolio")
         nav_item.click()

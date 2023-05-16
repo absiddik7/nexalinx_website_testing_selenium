@@ -12,7 +12,7 @@ class BlogPageTest(unittest.TestCase):
         self.driver.implicitly_wait(10)
         self.scroll_to_element = "arguments[0].scrollIntoView();"
         
-
+  
     def test_blog_page(self):
         self.driver.get(config.BASE_URL)
         sleep(5)

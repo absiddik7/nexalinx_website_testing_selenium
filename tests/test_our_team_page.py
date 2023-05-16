@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 
 class OurTeamPageTest(unittest.TestCase):
     
-
+  
 	def setUp(self):
 		self.driver = webdriver.Chrome(config.CHROME_DRIVER_PATH)
 		self.driver.maximize_window()

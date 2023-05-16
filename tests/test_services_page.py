@@ -97,7 +97,7 @@ class ServicesPageTest(unittest.TestCase):
         self.click_service_items(java, config.JAVA_PAGE_URL)
         
 		
-    
+     
         self.driver.quit()
         
         

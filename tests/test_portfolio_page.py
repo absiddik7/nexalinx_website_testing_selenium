@@ -1,9 +1,9 @@
 import unittest
-from unittest.result import failfast
 from selenium import webdriver
 import utils.config as config
 from time import sleep
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 class PortfolioPageTest(unittest.TestCase):
     
@@ -13,7 +13,7 @@ class PortfolioPageTest(unittest.TestCase):
         self.driver.maximize_window()
         self.driver.implicitly_wait(10)
         self.scroll_to_element = "arguments[0].scrollIntoView();"
-        
+         
 
     def test_portfolio_page(self):
         self.driver.get(config.BASE_URL)
@@ -62,8 +62,54 @@ class PortfolioPageTest(unittest.TestCase):
         close_btn.click()
         sleep(3)
 
-
         self.driver.quit()
+
+
+
+
+    def test_get_started_now_form(self):
+        self.driver.get(config.BASE_URL)
+        sleep(5)
+        # verfiy clicking on the nav item Portfolio open correct page
+        portfolio_navbar = self.driver.find_element(By.LINK_TEXT, "Portfolio")
+        portfolio_navbar.click()
+
+        sleep(5)
+
+        # verify Get Started Now button is present and open correct page
+        get_started_now_button = self.driver.find_element(By.XPATH, "//button[contains(text(),'Get Started Now!')]")
+        self.assertTrue(get_started_now_button.is_displayed())
+        get_started_now_button.click()
+        modal_window = self.driver.find_element(By.XPATH, "//div[@class='modal-dialog']")
+        self.assertTrue(modal_window.is_displayed(), "Modal window is not displayed")
+        sleep(3)
+
+        # insert name in the form
+        name_field = self.driver.find_element(By.XPATH, "//html[1]/body[1]/div[3]/div[1]/div[1]/div[2]/div[1]/form[1]/div[2]/input[1]")
+        name_field.send_keys("Test Name")
+
+        # insert email in the form
+        email_field = self.driver.find_element(By.XPATH, "/html[1]/body[1]/div[3]/div[1]/div[1]/div[2]/div[1]/form[1]/div[3]/input[1]")
+        email_field.send_keys("test@gmail.com")
+
+        # insert contact number in the form
+        contact_number_field = self.driver.find_element(By.XPATH, "/html[1]/body[1]/div[3]/div[1]/div[1]/div[2]/div[1]/form[1]/div[4]/input[1]")
+        contact_number_field.send_keys("1234567890")
+
+        # insert comment in the form
+        comment_field = self.driver.find_element(By.XPATH, "/html[1]/body[1]/div[3]/div[1]/div[1]/div[2]/div[1]/form[1]/div[5]/textarea[1]")
+        comment_field.send_keys("Test Comment")
+
+        # click on submit button
+        submit_button = self.driver.find_element(By.XPATH, "/html[1]/body[1]/div[3]/div[1]/div[1]/div[2]/div[1]/form[1]/div[6]/button[1]")
+        submit_button.click()
+
+        
+        sleep(3)
+
+
+
+    
 
     def tearDown(self):
         self.driver.close
