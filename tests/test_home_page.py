@@ -63,52 +63,52 @@ class HomePageTest(unittest.TestCase):
         self.driver.get(config.BASE_URL)
         sleep(5)
 
-        # verfiy clicking on the nav item Home open correct page
+        # verify clicking on the nav item Home open correct page
         nav_item = self.driver.find_element(By.LINK_TEXT, "Home")
         nav_item.click()
         self.assertEqual(self.driver.current_url, config.HOME_PAGE_URL)
         sleep(3)
 
-        # verfiy clicking on the nav item Service open dropdown menu
+        # verify clicking on the nav item Service open dropdown menu
         nav_item = self.driver.find_element(By.LINK_TEXT, "Services")
         nav_item.click()
         nav_dropdown = self.driver.find_element(By.XPATH, "//div[contains(@class,'dropdown-menu show')]")
         self.assertTrue(nav_dropdown.is_displayed())
         sleep(3)
 
-        # verfiy clicking on the nav item Technologies open dropdown menu
+        # verify clicking on the nav item Technologies open dropdown menu
         nav_item = self.driver.find_element(By.LINK_TEXT, "Technologies")
         nav_item.click()
         nav_dropdown = self.driver.find_element(By.XPATH, "//div[contains(@class,'dropdown-menu show')]")
         self.assertTrue(nav_dropdown.is_displayed())
         sleep(3)
   
-        # verfiy clicking on the nav item Portfolio open correct page
+        # verify clicking on the nav item Portfolio open correct page
         nav_item = self.driver.find_element(By.LINK_TEXT, "Portfolio")
         nav_item.click()
         self.assertEqual(self.driver.current_url, config.PORTFOLIO_PAGE_URL)
         sleep(3)
 
-        # verfiy clicking on the nav item Blog open correct page
+        # verify clicking on the nav item Blog open correct page
         nav_item = self.driver.find_element(By.LINK_TEXT, "Blog")
         nav_item.click()
         self.assertEqual(self.driver.current_url, config.BLOG_PAGE_URL)
         sleep(3)
 
-        # verfiy clicking on the nav item About US open dropdown menu
+        # verify clicking on the nav item About US open dropdown menu
         nav_item = self.driver.find_element(By.LINK_TEXT, "About US")
         nav_item.click()
         nav_dropdown = self.driver.find_element(By.XPATH, "//div[contains(@class,'dropdown-menu show')]")
         self.assertTrue(nav_dropdown.is_displayed())
         sleep(3)
 
-        # verfiy clicking on the nav item About US open correct page
+        # verify clicking on the nav item About US open correct page
         about_us_dropdown_item = self.driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/nav[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/a[1]/a[1]")
         about_us_dropdown_item.click()
         self.assertEqual(self.driver.current_url, config.ABOUT_US_PAGE_URL)
         sleep(3)
 
-        # verfiy clicking on the nav item Our Team open correct page
+        # verify clicking on the nav item Our Team open correct page
         about_us_nav_item = self.driver.find_element(By.LINK_TEXT, "About US")
         about_us_nav_item.click()
         sleep(3)
